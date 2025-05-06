@@ -1,0 +1,829 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    scroll-behavior: smooth;
+  }
+
+  /* Custom font styles */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Cormorant Garamond", serif;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+  }
+
+  .font-serif {
+    font-family: "Cormorant Garamond", serif;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(212, 175, 55, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+  }
+}
+
+@keyframes subtleRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Add these new text animation keyframes after the existing animations */
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes letterSpacing {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    letter-spacing: normal;
+    opacity: 1;
+  }
+}
+
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Добавить эти стили после существующих анимаций, перед "Smooth scrolling for the entire page" */
+
+/* Добавляем стили для эффекта "из-под вуали" */
+@keyframes unveilAnimation {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transform: translateY(20px);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: translateY(0);
+  }
+}
+
+.unveil-animation {
+  animation: unveilAnimation 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.direction-card {
+  position: relative;
+}
+
+.direction-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+  transform: translateY(-100%);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+
+.direction-card.visible::before {
+  transform: translateY(0);
+}
+
+.direction-card-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Добавляем эффект свечения при наведении */
+.direction-card:hover {
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+}
+
+.direction-card:hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 0.75rem;
+  opacity: 0;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1.2s ease-out forwards;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 1.2s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 1.2s ease-out forwards;
+}
+
+.animate-float {
+  animation: floatAnimation 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s infinite;
+}
+
+.animate-subtle-rotate {
+  animation: subtleRotate 6s ease-in-out infinite;
+}
+
+/* Add these animation classes */
+.animate-text-reveal {
+  animation: textReveal 1.2s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.animate-letter-spacing {
+  animation: letterSpacing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.animate-gradient-text {
+  background: linear-gradient(90deg, #d4af37, #e6ecef, #d4af37);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientText 6s linear infinite;
+}
+
+/* Add heading animation styles */
+.heading-animation {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.heading-animation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add staggered text animation for headings */
+.staggered-heading .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.staggered-heading.visible .char {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.staggered-heading.visible .char:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.staggered-heading.visible .char:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.staggered-heading.visible .char:nth-child(3) {
+  transition-delay: 0.15s;
+}
+.staggered-heading.visible .char:nth-child(4) {
+  transition-delay: 0.2s;
+}
+.staggered-heading.visible .char:nth-child(5) {
+  transition-delay: 0.25s;
+}
+.staggered-heading.visible .char:nth-child(6) {
+  transition-delay: 0.3s;
+}
+.staggered-heading.visible .char:nth-child(7) {
+  transition-delay: 0.35s;
+}
+.staggered-heading.visible .char:nth-child(8) {
+  transition-delay: 0.4s;
+}
+.staggered-heading.visible .char:nth-child(9) {
+  transition-delay: 0.45s;
+}
+.staggered-heading.visible .char:nth-child(10) {
+  transition-delay: 0.5s;
+}
+.staggered-heading.visible .char:nth-child(11) {
+  transition-delay: 0.55s;
+}
+.staggered-heading.visible .char:nth-child(12) {
+  transition-delay: 0.6s;
+}
+.staggered-heading.visible .char:nth-child(13) {
+  transition-delay: 0.65s;
+}
+.staggered-heading.visible .char:nth-child(14) {
+  transition-delay: 0.7s;
+}
+.staggered-heading.visible .char:nth-child(15) {
+  transition-delay: 0.75s;
+}
+.staggered-heading.visible .char:nth-child(16) {
+  transition-delay: 0.8s;
+}
+.staggered-heading.visible .char:nth-child(17) {
+  transition-delay: 0.85s;
+}
+.staggered-heading.visible .char:nth-child(18) {
+  transition-delay: 0.9s;
+}
+.staggered-heading.visible .char:nth-child(19) {
+  transition-delay: 0.95s;
+}
+.staggered-heading.visible .char:nth-child(20) {
+  transition-delay: 1s;
+}
+/* Add more if needed for longer headings */
+
+/* Gold accent for headings */
+.heading-gold-accent {
+  position: relative;
+}
+
+.heading-gold-accent::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent);
+  transform: translateX(-50%);
+  transition: width 1.5s ease-out 0.5s;
+}
+
+.heading-gold-accent.visible::after {
+  width: 80px;
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Transition utilities */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.duration-500 {
+  transition-duration: 500ms;
+}
+
+.duration-700 {
+  transition-duration: 700ms;
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ease-out {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.ease-in {
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Smoother animations */
+.smooth-fade {
+  transition: opacity 1.2s ease-out;
+}
+
+.smooth-transform {
+  transition: transform 1.2s ease-out, opacity 1.2s ease-out;
+}
+
+/* Optimize animations for better performance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Improve animation performance */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.hardware-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Site wrapper and content structure */
+.site-wrapper {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+.fixed-hero {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  height: 100vh;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #e6ecef;
+
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+  .fixed-hero {
+    position: relative;
+    height: 100vh;
+  }
+}
+
+/* Add a background color to make the width constraint visible */
+body {
+  background-color: #f5f5f5;
+  max-width: 100vw;
+}
+
+/* Logo carousel animation */
+.logo-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.logo-carousel {
+  width: 100%;
+  height: 100%;
+  animation: logoSpin 20s linear infinite, logoPulse 8s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@keyframes logoSpin {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotateY(360deg) scale(1);
+  }
+}
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(78, 141, 124, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.7));
+  }
+}
+
+/* Add a subtle glow effect on hover */
+.logo-container:hover .logo-carousel {
+  animation-play-state: paused;
+  filter: drop-shadow(0 0 20px rgba(78, 141, 124, 0.8));
+  transition: filter 0.5s ease;
+}
+
+/* Small logo at bottom of hero */
+.small-logo-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+}
+
+.small-logo {
+  width: 100%;
+  height: 100%;
+  animation: smallLogoGlow 3s ease-in-out infinite;
+  will-change: filter;
+}
+
+@keyframes smallLogoGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 3px rgba(78, 141, 124, 0.6));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.7));
+    transform: scale(1.1);
+  }
+}
+
+/* Decorative video border styles */
+.video-decorative-border {
+  position: relative;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+}
+
+.video-decorative-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 0.75rem;
+  background: transparent;
+  pointer-events: none;
+}
+
+/* Ensure video section fits on one screen */
+@media (min-height: 700px) {
+  .video-section-container {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* Responsive adjustments for video section */
+@media (max-width: 768px) {
+  .video-section-container {
+    min-height: auto;
+  }
+}
+
+/* Стили для горизонтального слайдера направлений */
+.directions-slider-container {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  min-height: 400vh; /* Обеспечивает достаточное пространство для скролла */
+  z-index: 10;
+}
+
+.sticky-slider-view {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e6ecef;
+}
+
+/* Анимация для перелистывания */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* Стили для навигационных кнопок */
+.slider-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.slider-nav-button:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-nav-button.prev {
+  left: 20px;
+}
+
+.slider-nav-button.next {
+  right: 20px;
+}
+
+/* Адаптивные стили для мобильных устройств */
+@media (max-width: 768px) {
+  .sticky-slider-view {
+    height: 90vh;
+  }
+
+  .slider-nav-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Стили для индикаторов слайдов */
+.slide-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 20;
+}
+
+.slide-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+
+.slide-indicator.active {
+  background: rgba(212, 175, 55, 1);
+  transform: scale(1.2);
+}
+
+/* Эффект перелистывания страницы */
+.page-turn-effect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 100vh 100vw;
+  border-color: transparent transparent #fff transparent;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.page-turn-effect.active {
+  opacity: 0.1;
+  animation: pageTurn 0.8s ease-out forwards;
+}
+
+@keyframes pageTurn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 0.1;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
