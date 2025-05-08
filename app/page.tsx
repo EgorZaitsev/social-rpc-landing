@@ -793,7 +793,7 @@ const AuthorsGrid = () => {
     {
       name: "Виктория Мордашева",
       role: "Редактор",
-      image: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/eeddc9ca-fae6-492f-b709-4ec279d01220",
+      image: "/mordasheva.jpg",
     },
     {
       name: "Желяев Данила",
@@ -957,13 +957,13 @@ const ScientificLeadersGrid = () => {
             >
               <div className="relative mb-6 group">
                 <div className="absolute inset-0 rounded-full bg-cedar-gold/10 transform scale-90 group-hover:scale-110 transition-transform duration-500"></div>
-                <div className="relative w-48 h-48 md:w-56 md:h-56 mx-auto overflow-hidden rounded-full border-4 border-cedar-beige shadow-lg">
+                <div className="relative w-36 h-36 md:w-56 md:h-56 mx-auto overflow-hidden rounded-full border-4 border-cedar-beige shadow-lg">
                   <Image
                     src={leader.image || "/placeholder.svg"}
                     alt={leader.name}
-                    width={240}
-                    height={240}
-                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                    width={100}
+                    height={100}
+                    className="object-cover object-top z-50 w-full h-full transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
                 <motion.div
