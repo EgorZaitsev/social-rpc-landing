@@ -125,8 +125,6 @@ const AnimateOnScroll = ({ children, threshold = 0.1 }) => {
     </motion.div>
   )
 }
-
-// Компонент горизонтального слайдера для направлений
 const DirectionsSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const containerRef = useRef(null)
@@ -140,28 +138,28 @@ const DirectionsSlider = () => {
       title: "Духовно-просветительское",
       description:
         "Занятия по основам православной культуры, изучение Священного Писания в доступной для детей форме, беседы со священниками и участие в богослужениях. Дети знакомятся с традициями православия, учатся понимать смысл церковных праздников и обрядов, развивают духовное мировоззрение.",
-      icon: "church",
-      bgColor: "bg-cedar-beige",
+      icon: "prosvet",
+      bgColor: "bg-white",
     },
     {
       title: "Спортивно-оздоровительное",
       description:
         "Регулярные спортивные занятия и соревнования помогают детям развивать физическую силу, выносливость и командный дух. Программа включает элементы традиционных боевых искусств, общую физическую подготовку и спортивные игры, направленные на формирование здорового образа жизни.",
-      icon: "activity",
+      icon: "sport",
       bgColor: "bg-white",
     },
     {
       title: "Военно-патриотическое",
       description:
         "Воспитание любви к Родине, уважения к её истории и традициям. Дети изучают историю России, встречаются с ветеранами, участвуют в памятных мероприятиях. Особое внимание уделяется изучению подвигов русских воинов и святых защитников Отечества.",
-      icon: "flag",
-      bgColor: "bg-cedar-beige",
+      icon: "gol",
+      bgColor: "bg-white",
     },
     {
       title: "Творческое развитие",
       description:
         "Творческие мастерские и кружки помогают детям раскрыть свои таланты в различных направлениях искусства. Иконопись, хоровое пение, рукоделие и другие виды творчества позволяют детям выразить себя и познакомиться с богатым культурным наследием православной традиции.",
-      icon: "palette",
+      icon: "art",
       bgColor: "bg-white",
     },
   ]
@@ -232,61 +230,53 @@ const DirectionsSlider = () => {
                   opacity: { duration: 0.5 },
                 }}
               >
-                <div className={`relative bg-white rounded-xl p-8 shadow-lg ${direction.bgColor}`}>
-                  {/* Декоративный элемент для эффекта "из-под вуали" */}
+                <div
+                  className={`relative bg-white rounded-xl overflow-hidden shadow-lg ${direction.bgColor} flex flex-col items-center justify-center md:flex-row`}
+                >
+                  {/* Квадратное фото занимает 50% ширины */}
                   <motion.div
-                    className="absolute inset-0 bg-cedar-gold/5 rounded-xl"
-                    initial={{ opacity: 1 }}
-                    animate={{ opacity: index === currentIndex ? 0 : 1 }}
-                    transition={{ delay: 0.3, duration: 0.8 }}
-                  />
-                  
-                  <div className="flex flex-col md:flex-row items-center gap-8">
-                    <motion.div
-                      className="w-24 h-24 rounded-full bg-cedar-gold/10 flex items-center justify-center relative z-10 flex-shrink-0"
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{
-                        scale: index === currentIndex ? 1 : 0.8,
-                        opacity: index === currentIndex ? 1 : 0.5,
-                      }}
-                      transition={{ delay: 0.2, duration: 0.8 }}
-                      whileHover={{
-                        scale: 1.05,
-                        backgroundColor: "rgba(201, 167, 94, 0.2)",
-                      }}
-                    >
+                    className="w-full h-full md:w-1/2 relative"
+                    initial={{ opacity: 0.8 }}
+                    animate={{
+                      opacity: index === currentIndex ? 1 : 0.7,
+                      scale: index === currentIndex ? 1 : 0.95,
+                    }}
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                  >
+                    <div className="aspect-square flex relative overflow-clip">
                       <Image
-                        src={`/abstract-geometric-shapes.png?height=48&width=48&query=${direction.icon} icon`}
+                        src={`/${direction.icon}.jpg`}
                         alt={direction.title}
-                        width={48}
-                        height={48}
-                        className="h-12 w-12 text-cedar-gold"
+                        width={500}
+                        height={500}
+                        className="object-cover justify-center items-center w-[300px] rounded-xl m-auto h-[300px] z-50 transition-transform duration-700 "
                       />
-                    </motion.div>
-                    
-                    <div className="flex-1">
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{
-                          opacity: index === currentIndex ? 1 : 0.5,
-                          y: index === currentIndex ? 0 : 10,
-                        }}
-                        transition={{ delay: 0.3, duration: 0.8 }}
-                      >
-                        <h3 className="font-serif text-2xl md:text-3xl font-bold text-cedar-gold mb-4">
-                          {direction.title}
-                        </h3>
-                        
-                        <motion.p
-                          className="text-cedar-green/80 text-lg"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: index === currentIndex ? 1 : 0.5 }}
-                          transition={{ delay: 0.4, duration: 0.8 }}
-                        >
-                          {direction.description}
-                        </motion.p>
-                      </motion.div>
                     </div>
+                  </motion.div>
+                  
+                  {/* Текстовый контент занимает 50% ширины */}
+                  <div className="w-full md:w-1/2 p-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{
+                        opacity: index === currentIndex ? 1 : 0.5,
+                        y: index === currentIndex ? 0 : 10,
+                      }}
+                      transition={{ delay: 0.3, duration: 0.8 }}
+                    >
+                      <h3 className="font-serif text-2xl md:text-3xl font-bold text-cedar-gold mb-4">
+                        {direction.title}
+                      </h3>
+                      
+                      <motion.p
+                        className="text-cedar-green/80 text-base md:text-lg"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: index === currentIndex ? 1 : 0.5 }}
+                        transition={{ delay: 0.4, duration: 0.8 }}
+                      >
+                        {direction.description}
+                      </motion.p>
+                    </motion.div>
                   </div>
                 </div>
               </motion.div>
@@ -317,6 +307,7 @@ const DirectionsSlider = () => {
   )
 }
 
+
 const sections = [
   {
     title: "Образование через творчество укрепляет связь поколений",
@@ -335,7 +326,7 @@ const sections = [
       "и достигать поставленных целей.",
     ],
     icon: "star",
-    color: "cedar-brown",
+    color: "cedar-gold",
   },
   {
     title: "Вовлечённость прихожан — ключ к устойчивому развитию",
@@ -344,7 +335,7 @@ const sections = [
       "органичное развитие в соответствии с потребностями общины.",
     ],
     icon: "users",
-    color: "cedar-green",
+    color: "cedar-gold",
   },
   {
     title: "Системный подход дает долгосрочные результаты",
@@ -353,7 +344,7 @@ const sections = [
       "и подростков, формируя у них полезные привычки и навыки на всю жизнь.",
     ],
     icon: "users",
-    color: "cedar-green",
+    color: "cedar-gold",
   },
 ]
 
@@ -402,10 +393,15 @@ const AutoScrollText = () => {
       
       // Определяем текущую активную секцию на основе позиции скролла
       const scrollPosition = container.scrollTop
-      const sectionHeight = container.scrollHeight / sections.length
-      const newActiveSection = Math.floor(scrollPosition / sectionHeight)
+      const containerHeight = container.scrollHeight
+      const viewportHeight = window.innerHeight
+      const totalScrollableHeight = containerHeight - viewportHeight
       
-      if (newActiveSection !== activeSection && newActiveSection >= 0 && newActiveSection < sections.length) {
+      // Вычисляем, какой процент прокрутки соответствует каждой секции
+      const scrollProgress = scrollPosition / totalScrollableHeight
+      const newActiveSection = Math.min(sections.length - 1, Math.floor(scrollProgress * sections.length))
+      
+      if (newActiveSection !== activeSection) {
         setActiveSection(newActiveSection)
       }
       
@@ -461,124 +457,69 @@ const AutoScrollText = () => {
       {/* Контейнер для скролла */}
       <div
         ref={containerRef}
-        className="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        className="h-screen overflow-y-auto scrollbar-hide relative"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          height: `${sections.length * 100}vh`,
+        }}
       >
-        {sections.map((section, sectionIndex) => (
-          <div key={sectionIndex} className="h-screen flex items-center justify-center snap-start px-6 relative">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={activeSection === sectionIndex ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 30 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-${section.color}/20 mb-6`}
-                >
-                  <Image
-                    src={`/abstract-geometric-shapes.png?key=jhogl&height=32&width=32&query=${section.icon} icon`}
-                    alt={section.title}
-                    width={32}
-                    height={32}
-                    className={`text-${section.color}`}
-                  />
-                </motion.div>
-                
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={activeSection === sectionIndex ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 20 }}
-                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-                  className="font-serif text-3xl md:text-4xl lg:text-5xl mb-8 text-cedar-gold"
-                >
-                  {section.title}
-                </motion.h2>
-              </div>
-              
-              <div className="space-y-8">
-                {section.content.map((paragraph, paraIndex) => (
-                  <motion.p
-                    key={paraIndex}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={
-                      activeSection === sectionIndex ? { opacity: 1, y: 0 } : { opacity: 0, y: paraIndex > 0 ? 30 : 0 }
-                    }
-                    transition={{
-                      duration: 0.8,
-                      ease: "easeOut",
-                      delay: 0.2 + paraIndex * 0.2,
-                    }}
-                    className="text-lg md:text-xl text-cedar-beige/90 leading-relaxed text-center max-w-3xl mx-auto"
-                  >
-                    {paragraph}
-                  </motion.p>
-                ))}
-              </div>
-            </div>
-            
-            {/* Индикатор прокрутки вниз (только для последнего параграфа) */}
-            {sectionIndex < sections.length - 1 && (
-              <motion.div
-                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
-                animate={{
-                  y: [0, 10, 0],
-                  opacity: [0.6, 1, 0.6],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
-              >
-                <ChevronDown className="h-8 w-8 text-cedar-beige/50" />
-              </motion.div>
-            )}
-          </div>
-        ))}
-      </div>
-      
-      {/* Кнопка включения/выключения автоскролла */}
-      <button
-        className={`absolute bottom-8 right-8 z-20 p-3 rounded-full ${
-          autoScrollEnabled ? "bg-cedar-gold/20" : "bg-cedar-beige/10"
-        }`}
-        onClick={() => setAutoScrollEnabled(!autoScrollEnabled)}
-        aria-label={autoScrollEnabled ? "Выключить автоскролл" : "Включить автоскролл"}
-      >
-        <motion.div animate={{ rotate: autoScrollEnabled ? 0 : 45 }} transition={{ duration: 0.3 }}>
-          {autoScrollEnabled ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-cedar-beige"
+        <div className="sticky top-0 h-screen w-full">
+          {sections.map((section, sectionIndex) => (
+            <div
+              key={sectionIndex}
+              className="h-screen w-full absolute top-0 left-0 flex items-center justify-center px-6"
             >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M10 8l6 4-6 4V8z" />
-            </svg>
-          ) : (
-             <svg
-               xmlns="http://www.w3.org/2000/svg"
-               width="24"
-               height="24"
-               viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-               strokeWidth="2"
-               strokeLinecap="round"
-               strokeLinejoin="round"
-               className="text-cedar-beige/70"
-             >
-               <circle cx="12" cy="12" r="10" />
-               <path d="M10 15V9M14 15V9" />
-             </svg>
-           )}
-        </motion.div>
-      </button>
+              <motion.div
+                className="max-w-4xl mx-auto"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{
+                  opacity: activeSection === sectionIndex ? 1 : 0,
+                  y: activeSection === sectionIndex ? 0 : 50,
+                  pointerEvents: activeSection === sectionIndex ? "auto" : "none",
+                }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <div className="text-center mb-12">
+                  
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{
+                      opacity: activeSection === sectionIndex ? 1 : 0,
+                      y: activeSection === sectionIndex ? 0 : 20,
+                    }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                    className="font-serif text-3xl md:text-4xl lg:text-5xl mb-8 text-cedar-gold"
+                  >
+                    {section.title}
+                  </motion.h2>
+                </div>
+                
+                <div className="space-y-8">
+                  {section.content.map((paragraph, paraIndex) => (
+                    <motion.p
+                      key={paraIndex}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{
+                        opacity: activeSection === sectionIndex ? 1 : 0,
+                        y: activeSection === sectionIndex ? 0 : 30,
+                      }}
+                      transition={{
+                        duration: 0.8,
+                        ease: "easeOut",
+                        delay: 0.2 + paraIndex * 0.2,
+                      }}
+                      className="text-lg md:text-xl text-cedar-beige/90 leading-relaxed text-center max-w-3xl mx-auto"
+                    >
+                      {paragraph}
+                    </motion.p>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -596,21 +537,6 @@ const PhotoGallery = () => {
       src: "/1 (2).jpg",
       alt: "Празднование Пасхи",
       caption: "Празднование Пасхи в центре «Здоровое поколение»",
-    },
-    {
-      src: "/1 (3).jpg",
-      alt: "Спортивные тренировки",
-      caption: "Регулярные спортивные тренировки для детей и подростков",
-    },
-    {
-      src: "/1 (4).jpg",
-      alt: "Творческая мастерская",
-      caption: "Занятия в творческой мастерской по иконописи",
-    },
-    {
-      src: "/1 (5).jpg",
-      alt: "Духовные беседы",
-      caption: "Духовные беседы со священником",
     },
     {
       src: "/1 (6).jpg",
@@ -719,7 +645,7 @@ const PhotoGallery = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <AnimatedHeading className="text-3xl md:text-4xl mb-6 text-cedar-gold font-serif">Галерея</AnimatedHeading>
+          <AnimatedHeading className="text-3xl md:text-4xl mb-6 text-cedar-gold font-serif">Фотоотчет</AnimatedHeading>
           <p className="text-cedar-green mb-8">
             Фотографии из жизни центра «Здоровое поколение» и храма святого мученика Уара
           </p>
@@ -749,10 +675,6 @@ const PhotoGallery = () => {
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-cedar-green/80 to-transparent p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-30">
-                <p className="text-cedar-beige text-sm">{image.caption}</p>
-              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -783,10 +705,6 @@ const PhotoGallery = () => {
                   fill
                   className="object-contain"
                 />
-              </div>
-              
-              <div className="p-4 bg-cedar-beige border-t border-cedar-gold/20">
-                <p className="text-cedar-green font-serif text-xl">{galleryImages[selectedImage].caption}</p>
               </div>
               
               {/* Navigation buttons */}
@@ -973,14 +891,19 @@ const AuthorsGrid = () => {
 const ScientificLeadersGrid = () => {
   const leaders = [
     {
-      name: "Олег Сафронов",
-      role: "Научный руководитель",
-      image: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/019bc7ff-93f0-43a2-af63-1b663748fc29",
+      name: "Людмила Прохоренко",
+      role: "Продюсер, преподаватель",
+      image: "/lead1.jpg",
     },
     {
-      name: "Людмила Прохоренко",
-      role: "Научный руководитель",
-      image: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/e46c8174-e0a0-4cbb-98c8-9de7129fe948",
+      name: "Василий Пинкевич",
+      role: "Консультант, преподаватель",
+      image: "/lead2.jpg",
+    },
+    {
+      name: "Олег Сафронов",
+      role: "Мастер курса, руководитель проекта",
+      image: "/lead3.jpg",
     },
   ]
   
@@ -1097,7 +1020,7 @@ export default function Home() {
           </Link>
           
           <nav className="hidden md:flex items-center gap-8">
-            {["О центре", "Направления", "Галерея", "Контакты"].map((item, index) => (
+            {["О центре", "Направления", "Галерея", "Авторы"].map((item, index) => (
               <motion.div
                 key={item}
                 initial={{ opacity: 0, y: -20 }}
@@ -1133,34 +1056,11 @@ export default function Home() {
               variants={staggerContainer}
               className="flex flex-col items-center"
             >
-              <motion.div variants={staggerItem} className="mb-6">
-                <Image
-                  src="/orthodox-church-dome.svg"
-                  alt="Православный центр"
-                  width={120}
-                  height={120}
-                  className="text-cedar-gold"
-                />
-              </motion.div>
-              
-              <motion.div variants={staggerItem}>
-                <h2 className="text-xl text-cedar-gold uppercase tracking-widest mb-2 font-medium">
-                  Православный центр
-                </h2>
-              </motion.div>
-              
               <motion.div variants={staggerItem}>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl mb-6 max-w-4xl mx-auto leading-tight text-center text-cedar-gold font-serif">
-                  Здоровое поколение
+                  Социальные проекты Русской Православной Церкви: служение вне храма.
                 </h1>
               </motion.div>
-              
-              <motion.p
-                variants={staggerItem}
-                className="text-cedar-beige text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed text-center"
-              >
-                Социальная деятельность РПЦ
-              </motion.p>
               
               <motion.p
                 variants={staggerItem}
@@ -1169,31 +1069,64 @@ export default function Home() {
                 Более 4,5 тыс. действующих групп милосердия по всей России и ближнему зарубежью. Мы расскажем об одной
                 из них — о центре, в котором дети становятся сильными духом, телом и разумом.
               </motion.p>
+              
+              <motion.div variants={staggerItem}>
+                <h2 className="text-xl text-cedar-gold uppercase tracking-widest mb-2 font-medium">
+                  Межрегиональная общественная организация «Здоровое Поколение»
+                </h2>
+              </motion.div>
             </motion.div>
             
-            <motion.div
-              className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-              animate={{
-                y: [0, 10, 0],
-                opacity: [0.6, 1, 0.6],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-            >
-              <div className="small-logo-container mx-auto flex items-center justify-center">
-                <Image
-                  src="/logo-healthy-generation.png"
-                  alt="Здоровое поколение"
-                  width={40}
-                  height={40}
-                  className="small-logo"
-                />
+            <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+              <div className="w-full max-w-3xl mx-auto overflow-hidden">
+                <div className="relative">
+                <motion.div
+                  className="flex items-center gap-4 py-2"
+                  animate={{ x: "-50%" }}
+                  transition={{
+                    duration: 30,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "linear",
+                    repeatType: "loop",
+                    duration: 20,
+                  }}
+                  style={{ width: "fit-content" }}
+                >
+                  {/* First set of images */}
+                  {[...Array(12)].map((_, index) => (
+                    <div
+                      key={`first-${index}`}
+                      className="flex-shrink-0 h-16 w-16  rounded-md  overflow-hidden"
+                    >
+                      <Image
+                        src="/logo-healthy-generation.png"
+                        alt={`Жизнь центра ${index + 1}`}
+                        width={100}
+                        height={100}
+                        className="h-full w-full object-cover rounded-full"
+                      />
+                    </div>
+                  ))}
+                  
+                  {/* Duplicate set for seamless looping */}
+                  {[...Array(12)].map((_, index) => (
+                    <div
+                      key={`second-${index}`}
+                      className="flex-shrink-0 h-16 w-16  rounded-md  overflow-hidden"
+                    >
+                      <Image
+                        src="/logo-healthy-generation.png"
+                        alt={`Жизнь центра ${index + 1}`}
+                        width={100}
+                        height={100}
+                        className="h-full w-full object-cover rounded-full"
+                      />
+                    </div>
+                  ))}
+                </motion.div>
               </div>
-              <ChevronDown className="h-8 w-8 text-cedar-gold" />
-            </motion.div>
+              </div>
+            </div>
           </div>
         </section>
         
@@ -1225,7 +1158,7 @@ export default function Home() {
                     viewport={{ once: false, amount: 0.2 }}
                   >
                     <Image
-                      src="/churchbl1.jpg"
+                      src="/secondcenter.jpg"
                       alt="Храм святого мученика Уара"
                       width={800}
                       height={600}
@@ -1240,7 +1173,7 @@ export default function Home() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     viewport={{ once: false, amount: 0.2 }}
                   >
-                    <p className="text-cedar-green w-2/3 text-right justify-self-end">
+                    <p className="text-cedar-green w-2/3 text-center justify-self-center">
                       Центр «Здоровое поколение» создали прихожане, которые объединились ради общей цели — дать своим
                       детям возможность расти в среде, где царят вера, любовь к Отечеству и уважение к традиционным
                       ценностям. Они работали над местом, в котором не только воспитываются ум и тело, но и формируется
@@ -1257,7 +1190,7 @@ export default function Home() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     viewport={{ once: false, amount: 0.2 }}
                   >
-                    <p className="text-cedar-green w-2/3">
+                    <p className="text-cedar-green w-2/3 text-center justify-self-center">
                       Святой Уар почитается как единственный святой в православной традиции, являющийся небесным
                       ходатаем за некрещеных умерших и младенцев, умерших во чреве матери или при родах. Он жил в Египте
                       в конце III - начале IV веков в чину военачальника Тианской когорты.
@@ -1315,10 +1248,10 @@ export default function Home() {
                       viewport={{ once: false, amount: 0.2 }}
                       className="order-1 md:order-1"
                     >
-                      <AnimatedHeading level="h3" className="text-2xl mb-4 text-cedar-gold font-serif">
+                      <AnimatedHeading level="h3" className="text-2xl mb-4 text-cedar-gold font-serif text-center justify-self-center">
                         История храма
                       </AnimatedHeading>
-                      <p className="text-cedar-green mb-6 w-2/3">
+                      <p className="text-cedar-green mb-6 w-2/3 text-center justify-self-center">
                         Храм мученика Уара-война в посёлке Вёшки Мытищинского городского округа — один из немногих
                         православных святынь в России, освящённых в честь этого святого. После разрушения старинного
                         храма пророка Илии, существовавшего в Вёшках в XVIII веке, на протяжении долгого времени в
@@ -1368,7 +1301,7 @@ export default function Home() {
                       className="order-2 md:order-1 relative"
                     >
                       <Image
-                        src="/iconabl1.jpg"
+                        src="/ubranstvo.jpg"
                         alt="Иконостас храма"
                         width={700}
                         height={500}
@@ -1395,15 +1328,15 @@ export default function Home() {
                       viewport={{ once: false, amount: 0.2 }}
                       className="order-1 md:order-2"
                     >
-                      <AnimatedHeading level="h3" className="text-2xl mb-4 text-cedar-gold font-serif">
+                      <AnimatedHeading level="h3" className="text-2xl mb-4 text-cedar-gold font-serif text-center justify-self-center">
                         Внутреннее убранство
                       </AnimatedHeading>
-                      <p className="text-cedar-green mb-6 w-2/3">
+                      <p className="text-cedar-green mb-6 w-2/3 text-center justify-self-center">
                         Внутреннее убранство храма отличается особой красотой. Иконостас, покрытый сусальным золотом,
                         выполнен в стиле русского барокко мастерами из Палеха. Резные элементы и уникальные иконы
                         создают атмосферу благоговения и умиротворения.
                       </p>
-                      <p className="text-cedar-green w-2/3">
+                      <p className="text-cedar-green w-2/3 text-center justify-self-center">
                         Особое место в храме занимает икона святого мученика Уара с частицей его мощей, привезенная из
                         Греции. Храм славится своей акустикой, которая позволяет проводить не только богослужения, но и
                         духовные концерты церковного хора.
@@ -1424,10 +1357,10 @@ export default function Home() {
                       viewport={{ once: false, amount: 0.2 }}
                       className="order-1 md:order-1"
                     >
-                      <AnimatedHeading level="h3" className="text-2xl mb-4 text-cedar-gold font-serif">
+                      <AnimatedHeading level="h3" className="text-2xl mb-4 text-cedar-gold font-serif text-center justify-self-center">
                         Сплетенные истории храма и центра
                       </AnimatedHeading>
-                      <p className="text-cedar-green mb-6 w-2/3">
+                      <p className="text-cedar-green mb-6 w-2/3 text-center justify-self-center">
                         В 2017 году настоятелем храма назначили протоиерея Олега Мумрикова, который за два года до
                         этого, в 2015-м, стал ответственным за всю за экологическую работу Московской областной епархии.
                         На территории храма возник экопарк «На неведомых мытищинских дорожках», над которым работали
@@ -1468,7 +1401,7 @@ export default function Home() {
           </section>
           
           {/* Video Tour Section */}
-          <section className="py-16 bg-cedar-beige relative">
+          <section className="py-16 bg-cedar-green relative">
             <div className="container mx-auto px-4">
               <AnimateOnScroll>
                 <div className="max-w-3xl mx-auto text-center mb-8">
@@ -1522,11 +1455,11 @@ export default function Home() {
                     <AnimatedHeading level="h3" className="text-2xl mb-4 text-cedar-gold font-serif">
                       О видео-экскурсии
                     </AnimatedHeading>
-                    <p className="text-cedar-green mb-4">
+                    <p className="text-cedar-beige mb-4">
                       Наша команда приехала в храм Уара-воина, чтобы подробнее выяснить, как работает центр «Здоровое
                       поколение» и как дети учатся заботиться о душе и теле.
                     </p>
-                    <p className="text-cedar-green mb-4">
+                    <p className="text-cedar-beige mb-4">
                       Отец Олег дал нам историческую справку, поделился особенностями организации и своим видением ее
                       развития. Также он показал нам территорию храма и экопарк, за которым прихожане ухаживают
                       совместно со служителями.
@@ -1564,14 +1497,14 @@ export default function Home() {
           </section>
           
           {/* Easter Workshop Section */}
-          <section className="py-20 bg-cedar-beige relative">
+          <section className="py-20 bg-cedar-green relative">
             <div className="container mx-auto px-4">
               <AnimateOnScroll>
                 <div className="max-w-3xl mx-auto text-center mb-12">
                   <AnimatedHeading className="text-3xl md:text-4xl mb-6 text-cedar-gold font-serif">
                     Мастер-класс перед Пасхой
                   </AnimatedHeading>
-                  <p className="text-cedar-green">
+                  <p className="text-cedar-beige">
                     За неделю до Пасхи дети из центра «Здоровое поколение» собрались на творческий мастер-класс, где
                     расписали деревянные яйца и узнали историю праздника. Ребятам помогали катехизаторы и наставники.
                   </p>
@@ -1581,7 +1514,7 @@ export default function Home() {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 <AnimateOnScroll>
                   <div>
-                    <p className="text-cedar-green mb-6">
+                    <p className="text-cedar-beige mb-6">
                       Участники не только научились технике росписи, но и услышали рассказ о символическом значении этой
                       пасхальной традиции. Наша съемочная группа тоже поучаствовала в создании уникального яйца.
                     </p>
@@ -1624,7 +1557,7 @@ export default function Home() {
                   viewport={{ once: false, amount: 0.2 }}
                   variants={staggerContainer}
                 >
-                  {[1, 2, 3, 4].map((item) => (
+                  {[1,2,3,4].map((item) => (
                     <motion.div
                       key={item}
                       variants={staggerItem}
@@ -1633,14 +1566,14 @@ export default function Home() {
                         rotate: item % 2 === 0 ? 1 : -1,
                         zIndex: 10,
                       }}
-                      className="rounded-lg overflow-hidden shadow-md transition-all duration-500"
+                      className="rounded-lg w-[300px] h-[300px] relative overflow-hidden shadow-md transition-all duration-500  "
                     >
                       <Image
-                        src={`/orthodox-easter-egg-workshop.png?key=h8x9d&key=aprws&key=dp0b2&key=4s8uy&key=2wyc1&key=m0z3c&key=0quej&key=vnhi1&key=2fzck&key=plv9q&key=mhilp&key=cf959&key=9cc1b&key=to8v9&key=257qz&key=43reg&key=klizv&key=pchbf&key=sqfwc&key=ulhds&key=55uqh&key=p54cz&key=hzbzm&key=71qyl&key=hvdg3&key=s1k2d&key=1nce2&key=6c0rg&key=aidwr&height=300&width=300&query=orthodox easter egg painting workshop image ${item}`}
+                        src={`/mk${item}.jpg`}
                         alt={`Фото с мастер-класса ${item}`}
-                        width={300}
-                        height={300}
-                        className="w-full h-auto"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 300px"
                       />
                     </motion.div>
                   ))}
