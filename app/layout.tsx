@@ -7,7 +7,6 @@ const inter = Inter({ subsets: ["latin", "cyrillic"] })
 export const metadata = {
   title: "Центр «Здоровое поколение» | Храм святого мученика Уара",
   description: "Центр духовного и физического развития детей при храме святого мученика Уара",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({ children }) {
