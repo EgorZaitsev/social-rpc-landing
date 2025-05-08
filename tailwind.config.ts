@@ -26,29 +26,29 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          dark: "#0A2F49",
-          light: "#E6ECEF",
+          DEFAULT: "#2F4F4F", // Глубокий хвойно-зелёный
+          foreground: "#E5E2D4", // Светлый песочный/серо-бежевый
+          dark: "#2F4F4F", // Глубокий хвойно-зелёный
+          light: "#E5E2D4", // Светлый песочный/серо-бежевый
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "#5B3A29", // Тёплый древесный коричневый
+          foreground: "#E5E2D4", // Светлый песочный/серо-бежевый
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#E5E2D4", // Светлый песочный/серо-бежевый
+          foreground: "#2F4F4F", // Глубокий хвойно-зелёный
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-          gold: "#D4AF37",
-          mint: "#9BC1BC",
-          green: "#4E8D7C",
+          DEFAULT: "#C9A75E", // Золотистый (иконописный)
+          foreground: "#2F4F4F", // Глубокий хвойно-зелёный
+          gold: "#C9A75E", // Золотистый (иконописный)
+          mint: "#5B3A29", // Тёплый древесный коричневый
+          green: "#2F4F4F", // Глубокий хвойно-зелёный
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -57,6 +57,12 @@ const config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        cedar: {
+          green: "#2F4F4F", // Глубокий хвойно-зелёный
+          brown: "#5B3A29", // Тёплый древесный коричневый
+          beige: "#E5E2D4", // Светлый песочный/серо-бежевый
+          gold: "#C9A75E", // Золотистый (иконописный)
         },
       },
       borderRadius: {

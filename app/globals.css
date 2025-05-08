@@ -71,7 +71,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-cedar-beige text-cedar-green;
     scroll-behavior: smooth;
   }
 
@@ -151,13 +151,13 @@
 
 @keyframes pulseGlow {
   0% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 0 0 rgba(201, 167, 94, 0.4);
   }
   70% {
-    box-shadow: 0 0 0 15px rgba(212, 175, 55, 0);
+    box-shadow: 0 0 0 15px rgba(201, 167, 94, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    box-shadow: 0 0 0 0 rgba(201, 167, 94, 0);
   }
 }
 
@@ -245,7 +245,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+  background: linear-gradient(135deg, rgba(201, 167, 94, 0.1), transparent);
   transform: translateY(-100%);
   transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 0;
@@ -262,14 +262,14 @@
 
 /* Добавляем эффект свечения при наведении */
 .direction-card:hover {
-  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 10px 25px rgba(201, 167, 94, 0.15);
 }
 
 .direction-card:hover::after {
   content: "";
   position: absolute;
   inset: 0;
-  border: 2px solid rgba(212, 175, 55, 0.3);
+  border: 2px solid rgba(201, 167, 94, 0.3);
   border-radius: 0.75rem;
   opacity: 0;
   animation: glowPulse 2s ease-in-out infinite;
@@ -323,7 +323,7 @@
 }
 
 .animate-gradient-text {
-  background: linear-gradient(90deg, #d4af37, #e6ecef, #d4af37);
+  background: linear-gradient(90deg, #c9a75e, #e5e2d4, #c9a75e);
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
@@ -430,7 +430,7 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 167, 94, 0.8), transparent);
   transform: translateX(-50%);
   transition: width 1.5s ease-out 0.5s;
 }
@@ -515,19 +515,16 @@ html {
   max-width: 1350px;
   margin: 0 auto;
   position: relative;
-  background-color: #fff;
+  background-color: #e5e2d4;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 }
 
 .fixed-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position:relative;
   z-index: 50;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(47, 79, 79, 0.95);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  border-bottom: 1px solid rgba(201, 167, 94, 0.1);
   width: 100%;
   max-width: 1350px;
   margin: 0 auto;
@@ -548,14 +545,13 @@ html {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: #e6ecef;
-
+  background-color: #2f4f4f;
 }
 
 .content-wrapper {
   position: relative;
   z-index: 10;
-  background-color: white;
+  background-color: #e5e2d4;
 }
 
 /* Стили для мобильных устройств */
@@ -568,7 +564,7 @@ html {
 
 /* Add a background color to make the width constraint visible */
 body {
-  background-color: #f5f5f5;
+  background-color: #2f4f4f;
   max-width: 100vw;
 }
 
@@ -604,17 +600,17 @@ body {
 @keyframes logoPulse {
   0%,
   100% {
-    filter: drop-shadow(0 0 8px rgba(78, 141, 124, 0.6));
+    filter: drop-shadow(0 0 8px rgba(91, 58, 41, 0.6));
   }
   50% {
-    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.7));
+    filter: drop-shadow(0 0 15px rgba(201, 167, 94, 0.7));
   }
 }
 
 /* Add a subtle glow effect on hover */
 .logo-container:hover .logo-carousel {
   animation-play-state: paused;
-  filter: drop-shadow(0 0 20px rgba(78, 141, 124, 0.8));
+  filter: drop-shadow(0 0 20px rgba(91, 58, 41, 0.8));
   transition: filter 0.5s ease;
 }
 
@@ -636,11 +632,11 @@ body {
 @keyframes smallLogoGlow {
   0%,
   100% {
-    filter: drop-shadow(0 0 3px rgba(78, 141, 124, 0.6));
+    filter: drop-shadow(0 0 3px rgba(91, 58, 41, 0.6));
     transform: scale(1);
   }
   50% {
-    filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.7));
+    filter: drop-shadow(0 0 6px rgba(201, 167, 94, 0.7));
     transform: scale(1.1);
   }
 }
@@ -649,14 +645,14 @@ body {
 .video-decorative-border {
   position: relative;
   padding: 12px;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+  background: linear-gradient(135deg, rgba(201, 167, 94, 0.1), rgba(201, 167, 94, 0.05));
 }
 
 .video-decorative-border::before {
   content: "";
   position: absolute;
   inset: 0;
-  border: 2px solid rgba(212, 175, 55, 0.3);
+  border: 2px solid rgba(201, 167, 94, 0.3);
   border-radius: 0.75rem;
   background: transparent;
   pointer-events: none;
@@ -699,7 +695,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e6ecef;
+  background-color: #e5e2d4;
 }
 
 /* Анимация для перелистывания */
@@ -734,7 +730,7 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(229, 226, 212, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -744,7 +740,7 @@ body {
 }
 
 .slider-nav-button:hover {
-  background: rgba(212, 175, 55, 0.2);
+  background: rgba(201, 167, 94, 0.2);
   transform: translateY(-50%) scale(1.1);
 }
 
@@ -783,12 +779,12 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(212, 175, 55, 0.3);
+  background: rgba(201, 167, 94, 0.3);
   transition: all 0.3s ease;
 }
 
 .slide-indicator.active {
-  background: rgba(212, 175, 55, 1);
+  background: rgba(201, 167, 94, 1);
   transform: scale(1.2);
 }
 
@@ -826,4 +822,101 @@ body {
     opacity: 0;
     transform: scale(1);
   }
+}
+
+/* Стили для православного дизайна */
+.orthodox-container {
+  background-color: #2f4f4f;
+  color: #e5e2d4;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.orthodox-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("/orthodox-pattern.png") repeat;
+  opacity: 0.05;
+  z-index: 0;
+  border-radius: 0.5rem;
+}
+
+.orthodox-content {
+  position: relative;
+  z-index: 1;
+}
+
+.orthodox-title {
+  color: #c9a75e;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.orthodox-subtitle {
+  color: #e5e2d4;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.orthodox-icon {
+  color: #c9a75e;
+  margin-bottom: 1rem;
+}
+
+.orthodox-button {
+  background-color: #5b3a29;
+  color: #e5e2d4;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.orthodox-button:hover {
+  background-color: #c9a75e;
+  transform: translateY(-2px);
+}
+
+.orthodox-cross {
+  color: #c9a75e;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.orthodox-border {
+  border: 1px solid rgba(201, 167, 94, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.orthodox-card {
+  background-color: #e5e2d4;
+  color: #2f4f4f;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.orthodox-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: url("/placeholder.svg") no-repeat;
+  background-size: contain;
+  opacity: 0.1;
+  z-index: 0;
 }
