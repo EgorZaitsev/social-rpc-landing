@@ -1596,7 +1596,19 @@ export default function Home() {
             <ScientificLeadersGrid />
           </section>
           
-          {/* Остальные секции... */}
+          <footer className="bg-cedar-green">
+            <AnimateOnScroll>
+              <div className="max-w-3xl mt-16 mx-auto text-center mb-16 bg-cedar-green">
+                <AnimatedHeading className="text-3xl md:text-4xl mb-6 text-cedar-gold font-serif">
+                  Благодарность
+                </AnimatedHeading>
+                <p className="text-cedar-beige">
+                  Наша команда выражает безмерную благодарность отцу Олегу, преподавателям центра, родителям, ребятам и другим прихожанам, которые не только были рады видеть съемочную группу на мастер-классе, но и с радостью отвечали на все наши вопросы. Конечно, не можем не упомянуть Олега Ивановича, Людмилу Вячеславовну и Василия Константиновича. Твердо и четко говорим всем вам спасибо!
+                </p>
+              </div>
+            </AnimateOnScroll>
+            
+          </footer>
         </div>
       </main>
     </div>
