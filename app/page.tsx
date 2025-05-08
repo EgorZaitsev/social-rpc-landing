@@ -1003,21 +1003,14 @@ export default function Home() {
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
       >
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/orthodox-church-dome.svg"
-              alt="Логотип центра"
-              width={40}
-              height={40}
-              className="h-10 w-10 text-cedar-gold"
-            />
+          <div className="flex items-center gap-3">
             <div className="flex flex-col">
               <span className="font-serif text-xl font-semibold text-cedar-beige uppercase tracking-wider">
                 Здоровое поколение
               </span>
               <span className="text-xs text-cedar-gold uppercase tracking-wider">Православный центр</span>
             </div>
-          </Link>
+          </div>
           
           <nav className="hidden md:flex items-center gap-8">
             {["О центре", "Направления", "Галерея", "Авторы"].map((item, index) => (
