@@ -830,9 +830,7 @@ const AuthorsGrid = () => {
   
   return (
     <div className="py-20 bg-cedar-beige relative">
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[url('/placeholder.svg?key=bnm45')] bg-repeat"></div>
-      </div>
+      
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
@@ -930,9 +928,7 @@ const ScientificLeadersGrid = () => {
   
   return (
     <div className="py-20 bg-cedar-beige relative">
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[url('/placeholder.svg?key=bnm45')] bg-repeat"></div>
-      </div>
+      
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
