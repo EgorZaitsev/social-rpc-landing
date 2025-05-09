@@ -1425,13 +1425,14 @@ export default function Home() {
                   <div className="aspect-w-16 aspect-h-9 bg-cedar-green">
                     <div className="w-full h-full">
                       <div className="relative w-full h-full">
-                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-134180173&id=456239368&hd=2"
-                                width="630"
-                                height="350"
+                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-230367682&id=456239021&hd=2&hash=e9bcd380dddf2640"
+                                width="853"
+                                height="480"
                                 allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
                                 frameBorder="0"
+                                className="absolute top-0 left-0 w-full h-full"
+                                
                                 allowFullScreen></iframe>
-                       
                       </div>
                     </div>
                   </div>
@@ -1459,8 +1460,8 @@ export default function Home() {
                     </p>
                     
                     <motion.div className="mt-6" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button className="bg-cedar-gold hover:bg-cedar-gold/90 text-cedar-beige transition-all duration-500">
-                        Погрузиться в экскурсию
+                      <Button  className="bg-cedar-gold hover:bg-cedar-gold/90 text-cedar-beige transition-all duration-500">
+                        <Link target="_blank" href='https://vkvideo.ru/video-230367682_456239021?list=ln-6kJ0ZjOgVvInex8E5U'>Погрузиться в экскурсию</Link>
                       </Button>
                     </motion.div>
                   </motion.div>
@@ -1530,10 +1531,12 @@ export default function Home() {
                       <div className="aspect-w-16 aspect-h-9 bg-cedar-green">
                         <div className="flex items-center justify-center w-full h-full">
                           <div className="relative w-full h-full">
-                            <iframe src="https://vkvideo.ru/video_ext.php?oid=-134180173&id=456239368&hd=2"
+                            <iframe src="https://vkvideo.ru/video_ext.php?oid=-230367682&id=456239020&hd=2&hash=37e9c0431e7ad4d0"
+                                    width="853"
+                                    height="480"
                                     allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                                    className="absolute top-0 left-0 w-full h-full"
                                     frameBorder="0"
+                                    className="absolute top-0 left-0 w-full h-full"
                                     allowFullScreen></iframe>
                             
                           </div>
