@@ -348,162 +348,272 @@ const sections = [
   },
 ]
 
-const AutoScrollText = () => {
-  const containerRef = useRef<HTMLElement>(null)
+
+const ScrollTransformSections = () => {
   const [activeSection, setActiveSection] = useState(0)
-  const [autoScrollEnabled, setAutoScrollEnabled] = useState(true)
-  const [userScrolling, setUserScrolling] = useState(false)
-  const scrollTimeout = useRef(null)
+  const [direction, setDirection] = useState(1) // 1 for down, -1 for up
+  const componentRef = useRef<HTMLDivElement>(null)
+  const sectionContainerRef = useRef<HTMLDivElement>(null)
+  const scrollThreshold = 200 // Amount of scroll needed to trigger section change
+  const scrollAccumulator = useRef(0)
+  const isTransitioning = useRef(false)
   
-  // Управление автоматическим скроллом
-  useEffect(() => {
-    if (!containerRef.current || !autoScrollEnabled || userScrolling) return
-    
-    const sectionHeight = containerRef.current.scrollHeight / sections.length
-    const scrollDuration = 5000 // 5 секунд на секцию
-    
-    const interval = setInterval(() => {
-      if (activeSection < sections.length - 1) {
-        setActiveSection((prev) => prev + 1)
-        containerRef.current.scrollTo({
-          top: sectionHeight * (activeSection + 1),
-          behavior: "smooth",
-        })
-      } else {
-        // Возвращаемся к началу
-        setActiveSection(0)
-        containerRef.current.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        })
-      }
-    }, scrollDuration)
-    
-    return () => clearInterval(interval)
-  }, [activeSection, sections.length, autoScrollEnabled, userScrolling])
+  // Track if the component is in the "active zone" (centered in viewport)
+  const [isInActiveZone, setIsInActiveZone] = useState(false)
   
-  // Обработка ручного скролла пользователем
+  // Check if the component is in the active zone (centered in viewport)
   useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-    
-    const handleScroll = () => {
-      // Отмечаем, что пользователь скроллит
-      setUserScrolling(true)
+    const checkPosition = () => {
+      if (!componentRef.current) return
       
-      // Определяем текущую активную секцию на основе позиции скролла
-      const scrollPosition = container.scrollTop
-      const containerHeight = container.scrollHeight
-      const viewportHeight = window.innerHeight
-      const totalScrollableHeight = containerHeight - viewportHeight
+      const rect = componentRef.current.getBoundingClientRect()
+      const windowHeight = window.innerHeight
       
-      // Вычисляем, какой процент прокрутки соответствует каждой секции
-      const scrollProgress = scrollPosition / totalScrollableHeight
-      const newActiveSection = Math.min(sections.length - 1, Math.floor(scrollProgress * sections.length))
+      // Consider it "active" when the component is fully visible and centered
+      // You can adjust these thresholds as needed
+      const isActive =
+        rect.top <= windowHeight * 0.1 && // Top is near or above the top of viewport
+        rect.bottom >= windowHeight * 0.9 // Bottom is near or below the bottom of viewport
       
-      if (newActiveSection !== activeSection) {
-        setActiveSection(newActiveSection)
-      }
-      
-      // Сбрасываем таймер, если он уже установлен
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current)
-      }
-      
-      // Устанавливаем новый таймер для возобновления автоскролла через 5 секунд после последнего скролла
-      scrollTimeout.current = setTimeout(() => {
-        setUserScrolling(false)
-      }, 5000)
+      setIsInActiveZone(isActive)
     }
     
-    container.addEventListener("scroll", handleScroll)
+    // Check position on scroll
+    window.addEventListener("scroll", checkPosition)
+    // Check position on initial load
+    checkPosition()
+    
     return () => {
-      container.removeEventListener("scroll", handleScroll)
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current)
+      window.removeEventListener("scroll", checkPosition)
+    }
+  }, [])
+  
+  // Handle wheel events
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      // Only handle wheel events when in the active zone
+      if (!isInActiveZone) return
+      
+      // If we're at boundaries and scrolling beyond them, allow normal scrolling
+      if ((activeSection === 0 && e.deltaY < 0) || (activeSection === sections.length - 1 && e.deltaY > 0)) {
+        return // Let the browser handle the scroll
+      }
+      
+      // Otherwise prevent default scrolling and handle in-place transitions
+      e.preventDefault()
+      
+      if (isTransitioning.current) return
+      
+      // Accumulate scroll delta
+      scrollAccumulator.current += e.deltaY
+      
+      // Check if we've scrolled enough to change section
+      if (Math.abs(scrollAccumulator.current) >= scrollThreshold) {
+        const scrollDirection = scrollAccumulator.current > 0 ? 1 : -1
+        scrollAccumulator.current = 0
+        
+        // Set transition flag to prevent multiple rapid transitions
+        isTransitioning.current = true
+        setTimeout(() => {
+          isTransitioning.current = false
+        }, 800) // Match this with your transition duration
+        
+        // Update direction and active section (non-cyclic)
+        setDirection(scrollDirection)
+        setActiveSection((prev) => {
+          if (scrollDirection > 0) {
+            // Scrolling down, go to next section if not at the end
+            return Math.min(prev + 1, sections.length - 1)
+          } else {
+            // Scrolling up, go to previous section if not at the beginning
+            return Math.max(prev - 1, 0)
+          }
+        })
       }
     }
-  }, [activeSection, sections.length])
+    
+    const currentRef = sectionContainerRef.current
+    if (currentRef) {
+      currentRef.addEventListener("wheel", handleWheel, { passive: false })
+    }
+    
+    return () => {
+      if (currentRef) {
+        currentRef.removeEventListener("wheel", handleWheel)
+      }
+    }
+  }, [activeSection, sections.length, isInActiveZone])
+  
+  // Handle touch events
+  useEffect(() => {
+    let touchStartY = 0
+    let isTouching = false
+    
+    const handleTouchStart = (e: TouchEvent) => {
+      // Only handle touch events when in the active zone
+      if (!isInActiveZone) return
+      
+      touchStartY = e.touches[0].clientY
+      isTouching = true
+    }
+    
+    const handleTouchMove = (e: TouchEvent) => {
+      // Only handle touch events when in the active zone
+      if (!isInActiveZone || !isTouching) return
+      
+      const touchY = e.touches[0].clientY
+      const diff = touchStartY - touchY
+      
+      // If we're at boundaries and scrolling beyond them, allow normal scrolling
+      if ((activeSection === 0 && diff < 0) || (activeSection === sections.length - 1 && diff > 0)) {
+        return // Let the browser handle the scroll
+      }
+      
+      // Otherwise prevent default scrolling and handle in-place transitions
+      e.preventDefault()
+      
+      if (isTransitioning.current) return
+      
+      // Accumulate touch movement
+      scrollAccumulator.current += diff
+      touchStartY = touchY
+      
+      // Check if we've moved enough to change section
+      if (Math.abs(scrollAccumulator.current) >= scrollThreshold) {
+        const scrollDirection = scrollAccumulator.current > 0 ? 1 : -1
+        scrollAccumulator.current = 0
+        
+        // Set transition flag to prevent multiple rapid transitions
+        isTransitioning.current = true
+        setTimeout(() => {
+          isTransitioning.current = false
+        }, 800) // Match this with your transition duration
+        
+        // Update direction and active section (non-cyclic)
+        setDirection(scrollDirection)
+        setActiveSection((prev) => {
+          if (scrollDirection > 0) {
+            // Scrolling down, go to next section if not at the end
+            return Math.min(prev + 1, sections.length - 1)
+          } else {
+            // Scrolling up, go to previous section if not at the beginning
+            return Math.max(prev - 1, 0)
+          }
+        })
+      }
+    }
+    
+    const handleTouchEnd = () => {
+      isTouching = false
+      scrollAccumulator.current = 0
+    }
+    
+    const currentRef = sectionContainerRef.current
+    if (currentRef) {
+      currentRef.addEventListener("touchstart", handleTouchStart, { passive: true })
+      currentRef.addEventListener("touchmove", handleTouchMove, { passive: false })
+      currentRef.addEventListener("touchend", handleTouchEnd, { passive: true })
+    }
+    
+    return () => {
+      if (currentRef) {
+        currentRef.removeEventListener("touchstart", handleTouchStart)
+        currentRef.removeEventListener("touchmove", handleTouchMove)
+        currentRef.removeEventListener("touchend", handleTouchEnd)
+      }
+    }
+  }, [activeSection, sections.length, isInActiveZone])
+  
+  // Animation variants
+  const containerVariants = {
+    enter: (direction: number) => ({
+      y: direction > 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    center: {
+      y: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      y: direction > 0 ? "-100%" : "100%",
+      opacity: 0,
+    }),
+  }
+  
+  // Handle manual navigation
+  const navigateToSection = (index: number) => {
+    if (isTransitioning.current || !isInActiveZone) return
+    
+    isTransitioning.current = true
+    setTimeout(() => {
+      isTransitioning.current = false
+    }, 800)
+    
+    setDirection(index > activeSection ? 1 : -1)
+    setActiveSection(index)
+  }
   
   return (
-    <div className="relative h-screen overflow-hidden text-black">
-      {/* Фоновый градиент */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cedar-green via-cedar-green to-cedar-green/80 z-0"></div>
-      
-      {/* Декоративные элементы */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-cedar-gold/5 rounded-full -mt-48 -mr-48 blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-cedar-brown/5 rounded-full -mb-40 -ml-40 blur-3xl"></div>
-      
-      {/* Индикаторы секций */}
-      <div className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20 hidden md:flex flex-col gap-6">
-        {sections.map((section, index) => (
-          <button
-            key={index}
-            className={`w-3 h-3 rounded-full transition-all duration-500 ${
-              activeSection === index ? `bg-${section.color} w-4 h-4` : "bg-cedar-beige/30 hover:bg-cedar-beige/50"
-            }`}
-            onClick={() => {
-              setActiveSection(index)
-              containerRef.current.scrollTo({
-                top: (containerRef.current.scrollHeight / sections.length) * index,
-                behavior: "smooth",
-              })
-            }}
-            aria-label={`Перейти к секции ${section.title}`}
-          />
-        ))}
-      </div>
-      
-      {/* Контейнер для скролла */}
-      <div
-        ref={containerRef}
-        className="h-screen overflow-y-auto scrollbar-hide relative"
-        style={{
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          height: `${sections.length * 100}vh`,
-        }}
-      >
-        <div className="sticky top-0 h-screen w-full">
-          {sections.map((section, sectionIndex) => (
-            <div
-              key={sectionIndex}
-              className="h-screen w-full absolute top-0 left-0 flex items-center justify-center px-6"
+    <div ref={componentRef} className="relative">
+      {/* Special sections container */}
+      <div ref={sectionContainerRef} className="relative h-screen">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-cedar-green via-cedar-green to-cedar-green/80 z-0"></div>
+        
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-cedar-gold/5 rounded-full -mt-48 -mr-48 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-cedar-brown/5 rounded-full -mb-40 -ml-40 blur-3xl"></div>
+        
+        {/* Section indicators - only show when in active zone */}
+        {isInActiveZone && (
+          <div className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20 hidden md:flex flex-col gap-6">
+            {sections.map((section, index) => (
+              <button
+                key={index}
+                className={`w-3 h-3 rounded-full transition-all duration-500 ${
+                  activeSection === index ? `bg-${section.color} w-4 h-4` : "bg-cedar-beige/30 hover:bg-cedar-beige/50"
+                }`}
+                onClick={() => navigateToSection(index)}
+                aria-label={`Go to section ${section.title}`}
+              />
+            ))}
+          </div>
+        )}
+        
+        {/* Content container with fixed height */}
+        <div className="h-screen w-full relative flex items-center justify-center">
+          <AnimatePresence initial={false} custom={direction} mode="wait">
+            <motion.div
+              key={activeSection}
+              custom={direction}
+              variants={containerVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                y: { type: "tween", duration: 0.8, ease: "easeInOut" },
+                opacity: { duration: 0.5 },
+              }}
+              className="absolute inset-0 flex items-center justify-center px-6"
             >
-              <motion.div
-                className="max-w-4xl mx-auto"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{
-                  opacity: activeSection === sectionIndex ? 1 : 0,
-                  y: activeSection === sectionIndex ? 0 : 50,
-                  pointerEvents: activeSection === sectionIndex ? "auto" : "none",
-                }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-              >
+              <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
-                  
                   <motion.h2
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{
-                      opacity: activeSection === sectionIndex ? 1 : 0,
-                      y: activeSection === sectionIndex ? 0 : 20,
-                    }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
                     className="font-serif text-3xl md:text-4xl lg:text-5xl mb-8 text-cedar-gold"
                   >
-                    {section.title}
+                    {sections[activeSection].title}
                   </motion.h2>
                 </div>
                 
                 <div className="space-y-8">
-                  {section.content.map((paragraph, paraIndex) => (
+                  {sections[activeSection].content.map((paragraph, paraIndex) => (
                     <motion.p
                       key={paraIndex}
                       initial={{ opacity: 0, y: 30 }}
-                      animate={{
-                        opacity: activeSection === sectionIndex ? 1 : 0,
-                        y: activeSection === sectionIndex ? 0 : 30,
-                      }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{
                         duration: 0.8,
                         ease: "easeOut",
@@ -515,11 +625,16 @@ const AutoScrollText = () => {
                     </motion.p>
                   ))}
                 </div>
-              </motion.div>
-            </div>
-          ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
+        
+        {/* Scroll indicators - only show when in active zone */}
+        
       </div>
+      
+     
     </div>
   )
 }
@@ -1203,7 +1318,7 @@ export default function Home() {
                       alt="Храм святого мученика Уара"
                       width={800}
                       height={600}
-                      className="w-full h-auto object-cover rounded-lg"
+                      className="w-3/4 h-auto object-cover rounded-lg justify-self-center"
                     />
                   </motion.div>
                 </AnimateOnScroll>
@@ -1263,10 +1378,10 @@ export default function Home() {
                         alt="Внешний вид храма святого мученика Уара"
                         width={800}
                         height={600}
-                        className="w-full h-auto object-cover rounded-lg"
+                        className="w-3/4 h-auto object-cover rounded-lg justify-self-center"
                       />
                       <motion.div
-                        className="absolute -bottom-4 -right-4 bg-cedar-beige p-2 rounded shadow-md"
+                        className="absolute -bottom-4 -right-0 bg-cedar-beige p-2 rounded shadow-md"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.6 }}
@@ -1294,10 +1409,10 @@ export default function Home() {
                         alt="Иконостас храма"
                         width={700}
                         height={500}
-                        className="w-full h-auto object-cover rounded-lg"
+                        className="w-3/4 h-auto object-cover rounded-lg justify-self-center"
                       />
                       <motion.div
-                        className="absolute -bottom-4 -left-4 bg-cedar-beige p-2 rounded shadow-md"
+                        className="absolute -bottom-4 -left-0 bg-cedar-beige p-2 rounded shadow-md"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.6 }}
@@ -1372,10 +1487,10 @@ export default function Home() {
                         alt="Прихожане во время службы"
                         width={800}
                         height={600}
-                        className="w-full h-auto object-cover rounded-lg"
+                        className="w-3/4 justify-self-center h-auto object-cover rounded-lg"
                       />
                       <motion.div
-                        className="absolute -bottom-4 -right-4 bg-cedar-beige p-2 rounded shadow-md"
+                        className="absolute -bottom-4 -right-0 bg-cedar-beige p-2 rounded shadow-md"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.6 }}
@@ -1577,7 +1692,7 @@ export default function Home() {
           
           {/* Миссия, ценности и обращение - автоскролл секция */}
           <section id="миссия" className="relative">
-            <AutoScrollText />
+            <ScrollTransformSections />
           </section>
           
           {/* Галерея фотографий */}
