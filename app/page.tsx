@@ -1227,7 +1227,7 @@ export default function Home() {
               </AnimateOnScroll>
               
               {/* Scene 1 */}
-              <div className="scroll-scene min-h-screen flex flex-col justify-center">
+              <div className="scroll-scene flex flex-col justify-center">
                 <div className="grid md:grid-cols-2 gap-12 items-center mb-40">
                   <AnimateOnScroll>
                     <motion.div
@@ -1279,7 +1279,7 @@ export default function Home() {
               </div>
               
               {/* Scene 2 */}
-              <div className="scroll-scene min-h-screen flex flex-col justify-center">
+              <div className="scroll-scene  flex flex-col justify-center">
                 <div className="grid md:grid-cols-2 gap-12 items-center mb-40">
                   <AnimateOnScroll>
                     <motion.div
@@ -1336,7 +1336,7 @@ export default function Home() {
               </div>
               
               {/* Scene 3 */}
-              <div className="scroll-scene min-h-screen flex flex-col justify-center">
+              <div className="scroll-scene  flex flex-col justify-center">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                   <AnimateOnScroll>
                     <motion.div
