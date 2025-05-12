@@ -1047,7 +1047,7 @@ export default function Home() {
             >
               <motion.div variants={staggerItem}>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl mb-6 max-w-4xl mx-auto leading-tight text-center text-cedar-gold font-serif">
-                  Социальные проекты Русской Православной Церкви: служение вне храма.
+                  Социальные проекты Русской Православной Церкви: служение вне храма
                 </h1>
               </motion.div>
               
